@@ -119,7 +119,8 @@ public class Purse {
 	public Coin[] withdraw(double amount) {
 		// TODO don't allow to withdraw amount < 0
 		List<Coin> templist = new ArrayList<Coin>();
-		Arrays.sort(money.toArray());
+		Collections.sort(money);
+		Collections.reverse(money);
 		if (amount < 0)
 			return null;
 		/*
@@ -175,50 +176,7 @@ public class Purse {
 		return count() + " coins with value " + this.balance;
 	}
 
-	public static void main(String[] arg) {
-
-		Purse purse = new Purse(3);
-
-		System.out.println(purse.getBalance());
-
-		System.out.println(purse.count());
-
-		System.out.println(purse.isFull());
-
-		System.out.println(purse.insert(new Coin(5)));
-
-		System.out.println(purse.insert(new Coin(10)));
-
-		System.out.println(purse.insert(new Coin(0)));
-
-		System.out.println(purse.insert(new Coin(1)));
-
-		System.out.println(purse.insert(new Coin(5)));
-
-		System.out.println(purse.count());
-
-		System.out.println(purse.isFull());
-
-		System.out.println(purse.getBalance());
-
-		System.out.println(purse.toString());
-
-		// purse.withdraw(10);
-
-		for (Coin p : purse.withdraw(5)) {
-
-			System.out.println("after withdraw" + p.toString());
-
-		}
-
-		for (Coin p : purse.money) {
-
-			System.out.println(p.toString());
-
-		}
-
-	}
-
+	
 }
 // TODO remove the TODO comments after you complete them.
 // TODO When you are finished, there should not be any TODO. Including this one.
