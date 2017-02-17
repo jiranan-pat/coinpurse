@@ -52,11 +52,11 @@ public class Purse {
 	 * @return the total value of items in the purse.
 	 */
 	public double getBalance() {
-
+		double balance = 0;
 		for (int i = 0; i < count(); i++) {
-			this.balance = this.balance + money.get(i).getValue();
+			balance = balance + money.get(i).getValue();
 		}
-		return this.balance;
+		return balance;
 	}
 
 	/**
@@ -100,6 +100,7 @@ public class Purse {
 				return false;
 			} else {
 				money.add(coin);
+				this.balance = getBalance();
 				return true;
 			}
 		}
@@ -140,19 +141,10 @@ public class Purse {
 				amount -= d.getValue();
 			}
 		}
-		System.out.println("Amount = " + amount);
+		
 		if (amount == 0) {
-
-			for (Coin c : templist) {
-				for (Coin e : money) {
-					if (c.equals(e)) {
-						this.balance -= e.getValue();
-						money.remove(e);
-
-						break;
-					}
-				}
-			}
+			money.removeAll(templist);
+			balance = getBalance();
 
 			Coin[] array = new Coin[templist.size()];
 			templist.toArray(array);
@@ -173,7 +165,7 @@ public class Purse {
 	 */
 	public String toString() {
 		// TODO complete this
-		return count() + " coins with value " + this.balance;
+		return count() + " coins with value " + balance;
 	}
 
 	

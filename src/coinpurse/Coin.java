@@ -50,7 +50,7 @@ public class Coin implements Comparable{
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
-		if (obj.getClass() == this.getClass())
+		if (obj.getClass() != this.getClass())
 			return false;
 		Coin other = (Coin) obj;
 		if ((other.value == this.value)
