@@ -16,7 +16,7 @@ import java.util.List;
 public class Purse {
 	/** Collection of objects in the purse. */
 	// TODO declare a List of Coins named "money".
-	List<Coin> money = new ArrayList<Coin>();
+	List<Valuable> money = new ArrayList<Valuable>();
 	/**
 	 * Capacity is maximum number of coins the purse can hold. Capacity is set
 	 * when the purse is created and cannot be changed.
@@ -92,14 +92,14 @@ public class Purse {
 	 *            is a Coin object to insert into purse
 	 * @return true if coin inserted, false if can't insert
 	 */
-	public boolean insert(Coin coin) {
+	public boolean insert(Valuable value) {
 		// if the purse is already full then can't insert anything.
 		// TODO complete the insert method
 		if (!isFull()) {
-			if (coin.getValue() <= 0) {
+			if (value.getValue() <= 0) {
 				return false;
 			} else {
-				money.add(coin);
+				money.add(value);
 				this.balance = getBalance();
 				return true;
 			}
@@ -117,10 +117,10 @@ public class Purse {
 	 * @return array of Coin objects for money withdrawn, or null if cannot
 	 *         withdraw requested amount.
 	 */
-	public Coin[] withdraw(double amount) {
+	public Valuable[] withdraw(double amount) {
 		// TODO don't allow to withdraw amount < 0
-		List<Coin> templist = new ArrayList<Coin>();
-		Collections.sort(money);
+		List<Valuable> templist = new ArrayList<Valuable>();
+		Arrays.sort(money.toArray());
 		Collections.reverse(money);
 		if (amount < 0)
 			return null;
@@ -135,7 +135,7 @@ public class Purse {
 			// Collections.sort(money);
 			return null;
 		}
-		for (Coin d : money) {
+		for (Valuable d : money) {
 			if (d.getValue() <= amount) {
 				templist.add(d);
 				amount -= d.getValue();
@@ -146,7 +146,7 @@ public class Purse {
 			money.removeAll(templist);
 			balance = getBalance();
 
-			Coin[] array = new Coin[templist.size()];
+			Valuable[] array = new Valuable[templist.size()];
 			templist.toArray(array);
 
 			// Success.

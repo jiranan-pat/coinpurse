@@ -7,7 +7,7 @@ package coinpurse;
  * @author
  */
 // TODO declare that Coin implements Comparable<Coin>
-public class Coin implements Comparable{
+public class Coin implements Comparable<Coin>, Valuable {
 	public static final String DEFAULT_CURRENCY = "Baht";
 	/** Value of the coin. */
 	private double value;
@@ -80,11 +80,8 @@ public class Coin implements Comparable{
 		return value + "-" + currency;
 	}
 
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
+
 
 	// TODO Write good Javadoc comments on all methods.
 
