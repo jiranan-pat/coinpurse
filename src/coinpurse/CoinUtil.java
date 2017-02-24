@@ -4,10 +4,12 @@ import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.sound.sampled.ReverbType;
+
 /**
  * Some Coin utility methods for practice using Lists and Comparator.
  */
-public class CoinUtil {
+public class CoinUtil implements Valuable {
 
 	/**
 	 * Method that examines all the coins in a List and returns only the coins
@@ -20,8 +22,8 @@ public class CoinUtil {
 	 * @return a new List containing only the elements from coinlist that have
 	 *         the requested currency.
 	 */
-	public static List<Valuable> filterByCurrency(final List<Valuable> valuelist,
-			String currency) {
+	public static List<Valuable> filterByCurrency(
+			final List<Valuable> valuelist, String currency) {
 		List<Valuable> reValue = new ArrayList<Valuable>();
 		for (Valuable v : valuelist) {
 			if (v.getCurrency().equals(currency)) {
@@ -46,7 +48,13 @@ public class CoinUtil {
 	 *            use it to sort the coins.
 	 */
 	public static void sortByCurrency(List<Valuable> values) {
-		Collections.sort(values, new CompareByCurrency());
+		Collections.sort(values, new Comparator<Valuable>() {
+
+			@Override
+			public int compare(Valuable arg0, Valuable arg1) {
+				return (int) Math.signum(arg0.getValue() - arg1.getValue());
+			}
+		});
 	}
 
 	/**
@@ -59,21 +67,21 @@ public class CoinUtil {
 	 * 
 	 * Hint: this is easy if you sort the coins by currency first. :-)
 	 */
-	public static void sumByCurrency(List<Valuable> coins) {
-		Collections.sort(coins, new CompareByCurrency());
-		String refer = coins.get(0).getCurrency();
-		double sum = 0.0;
-
-		for (Valuable m : coins) {
-			if (m.getCurrency().equals(refer)) {
-				sum += m.getValue();
-			} else {
-				System.out.println(sum + " " + refer);
-				refer = m.getCurrency();
-				sum = m.getValue();
-			}
+	public static void sumByCurrency(List<Valuable> value) {
+		Map<String, Double> map = new HashMap<String, Double>();
+		for (Valuable values : value) {
+			if (map.containsKey(values.getCurrency())) {
+				map.put(values.getCurrency(),
+						values.getValue() + map.get(values.getCurrency()));
+			} else
+				map.put(values.getCurrency(), values.getValue());
 		}
-		System.out.println(sum + " " + refer);
+		for (String key : map.keySet()) {
+			System.out.print(map.get(key)+"-");
+			System.out.println(key);
+			
+
+		}
 	}
 
 	/**
@@ -108,7 +116,6 @@ public class CoinUtil {
 		System.out.print("coins= ");
 		printList(values, " ");
 		sumByCurrency(values);
-		
 
 	}
 
@@ -127,7 +134,7 @@ public class CoinUtil {
 	public static List<Valuable> makeCoins(String currency, double... values) {
 		List<Valuable> list = new ArrayList<Valuable>();
 		for (double value : values)
-			list.add(new Valuable(value, currency));
+			list.add(new Coin(value, currency));
 		return list;
 	}
 
@@ -141,5 +148,17 @@ public class CoinUtil {
 
 		}
 		System.out.println(); // end the line
+	}
+
+	@Override
+	public double getValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getCurrency() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

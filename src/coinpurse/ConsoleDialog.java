@@ -56,7 +56,7 @@ public class ConsoleDialog {
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-            Valuable valuee = new Valuable(value);
+            Valuable valuee = new Coin(value);
             System.out.printf("Deposit %s... ", valuee.toString() );
             boolean ok = purse.insert(valuee);
             System.out.println( (ok? "ok" : "FAILED") );
